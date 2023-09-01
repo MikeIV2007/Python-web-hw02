@@ -1,0 +1,44 @@
+# cворюємо образ
+create docker file
+1. ctrl+shit+p - opens command pallet
+2 enter: Docker: Add Docker file to workspace
+3 follow hints and tips
+
+from conspect:
+Dockerfile
+# Docker-команда FROM вказує базовий образ контейнера
+# Наш базовий образ - це Linux з попередньо встановленим python-3.10
+FROM python:3.10
+
+# Встановимо змінну середовища
+ENV APP_HOME /app
+
+# Встановимо робочу директорію всередині контейнера
+WORKDIR $APP_HOME
+
+# Скопіюємо інші файли в робочу директорію контейнера
+COPY . .
+
+# Встановимо залежності всередині контейнера
+RUN pip install -r requirements.txt
+
+# Позначимо порт, де працює застосунок всередині контейнера
+EXPOSE 5000
+
+# Запустимо наш застосунок всередині контейнера
+ENTRYPOINT ["python", "app.py"]
+
+
+docker build . -t assistant-bot-image
+
+# cворюємо контейнер з образу
+docker create -it --name assistant-bot assistant-bot-image
+
+# запускаємо контейнер і вносимо данні і виходимо з бота
+docker start -i assistant-bot
+
+# перевіряємо що контейнер не працює
+docker ps
+
+# запускаємо контейнер і перевіряємо чи данні
+docker start -i assistant-bot

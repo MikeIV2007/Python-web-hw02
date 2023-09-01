@@ -1,0 +1,10 @@
+poetry init
+poetry install
+poetry shell
+python -m pip freeze > requirements.txt
+or
+poetry export --without-hashes --format=requirements.txt > requirements.txt
+
+docker build . -t mykhailoivanov/python-web-hw02-image
+# docker run --name infinity -d -p 3000:5000 mykhailoivanov/python-web-hw02-image
+docker run -ti --name infinity -d mykhailoivanov/python-web-hw02-image
